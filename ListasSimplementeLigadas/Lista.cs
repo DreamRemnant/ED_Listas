@@ -16,9 +16,7 @@ namespace ListasSimplementeLigadas
         }
         public bool ValidaVacio()
         {
-            if (nodoInicial.Siguiente == null)
-            {
-                return true;
+            return nodoInicial.Siguiente == null;
             }
             return false;
             //return nodoInicial.Siguiente == null;
