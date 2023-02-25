@@ -17,10 +17,6 @@ namespace ListasSimplementeLigadas
         public bool ValidaVacio()
         {
             return nodoInicial.Siguiente == null;
-            }
-            return false;
-            //return nodoInicial.Siguiente == null;
-
         }
         public void VaciarLista()
         {
@@ -47,6 +43,14 @@ namespace ListasSimplementeLigadas
             Nodo nodoNuevo = new Nodo(valor);
             nodoActual.Siguiente= nodoNuevo;
         }
+
+        public void AgregarAlInicio(String valor)
+        {
+            nodoActual = nodoInicial;
+            Nodo nuevoNodo = new Nodo(valor, nodoActual.Siguiente);
+            nodoActual.Siguiente = nuevoNodo;
+        }
+
         public Nodo Buscar(string valor)
         {
             if (ValidaVacio())
@@ -61,9 +65,71 @@ namespace ListasSimplementeLigadas
                 {
                     return nodoActual;
                 }
+            }
+            return null;
+        }
+
+        public Nodo BuscarPorIndice(int indice)
+        {
+            int Indice = -1;
+
+            if (ValidaVacio())
+            {
                 return null;
             }
 
+            nodoActual = nodoInicial;
+
+            while (nodoActual.Siguiente != null)
+            {
+                nodoActual = nodoActual.Siguiente;
+                Indice++;
+
+                if(Indice == indice)
+                {
+                    return nodoActual;
+                }
+            }
+
+            return null;
+        }
+
+        public Nodo BuscarAnterior(String valor)
+        {
+            if (ValidaVacio()) 
+            {
+                return null;
+            }
+
+            nodoActual = nodoInicial;
+
+            while(nodoActual.Siguiente != null && nodoActual.Siguiente.Valor != valor)
+            {
+                nodoActual = nodoActual.Siguiente;
+                if (nodoActual.Siguiente.Valor == valor)
+                {
+                    return nodoActual;
+                }
+            }
+
+            return null;
+        }
+
+        public void BorrarNodo(String valor)
+        {
+            if (ValidaVacio())
+            {
+                return;
+            }
+
+            nodoActual = Buscar(valor);
+
+            if (nodoActual != null)
+            {
+                Nodo nodoAnterior = BuscarAnterior(valor);
+                nodoAnterior.Siguiente = nodoActual.Siguiente;
+                nodoActual.Siguiente = null;
+            }
         }
     }
 }
