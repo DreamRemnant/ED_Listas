@@ -10,6 +10,7 @@ namespace ListasDoblementeLigadas
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
