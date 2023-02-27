@@ -10,20 +10,22 @@ namespace ListasDoblementeLigadas
     {
         Nodo nodoInicial;
         Nodo nodoActual;
+        Nodo nodoFinal; //27 - Febrero - 2023
 
         public Lista()
         {
-            nodoInicial = new Nodo();
+            nodoInicial = null;
         }
 
         public bool ValidaVacio()
         {
-            return nodoInicial.Siguiente == null;
+            return nodoInicial == null;
         }
 
         public void VaciarLista()
         {
-            nodoInicial.Siguiente = null;
+            nodoInicial = null;
+            nodoFinal = null;
         }
 
         public String RecorrerLista()
@@ -41,6 +43,35 @@ namespace ListasDoblementeLigadas
             return valores;
         }
 
+        public String RecorrerListaReversa(){
+            string valores = string.Empty;
+
+            nodoActual = nodoFinal;
+
+            while (nodoActual.Anterior != null)
+            {
+                nodoActual = nodoActual.Anterior;
+                valores += nodoActual.Valor + "\n";
+            }
+        
+            return valores;
+        }
+
+        //27 - Feb - 2023
+        public void AgregarFinal(String valor) {
+            if (ValidaVacio){
+                Nodo nuevoNodo = new Nodo(valor);
+                nodoInicial = nuevoNodo;
+                nodoFinal = nuevoNodo;
+                return;
+            }
+
+            nodoActual = nodoFinal;
+            Nodo nuevoNodo = new Nodo(valor,nodoActual);
+            nodoActual.Siguiente = nuevoNodo;
+            nodoFinal = nuevoNodo;
+        }
+
         public void Agregar(string valor)
         {
             nodoActual = nodoInicial;
@@ -56,15 +87,18 @@ namespace ListasDoblementeLigadas
 
         public void AgregarNodoInicio(string valor)
         {
-            nodoActual = nodoInicial;
-            if(nodoActual.Siguiente == null)
+            if(ValidaVacio)
             {
-                Agregar(valor);
+                Nodo nuevoNodo = new Nodo(valor);
+                nodoInicial = nuevoNodo;
+                nodoFinal = nuevoNodo;
                 return;
             }
-            Nodo nuevoNodo = new Nodo(valor, nodoActual, nodoActual.Siguiente);
-            nodoActual.Siguiente.Anterior = nuevoNodo;
-            nodoActual.Siguiente = nuevoNodo;            
+
+            nodoActual = nodoInicial;
+            Nodo nuevoNodo = new Nodo(valor, null, nodoActual);
+            nodoActual.Anterior = nuevoNodo;
+            nodoInicial = nuevoNodo;
         }
 
         public Nodo Buscar(string valor)
